@@ -1,5 +1,5 @@
 // socket 连接插件
-const io = require('../../utils/weapp.socket.io/weapp.socket.io.test.js')
+const io = require('../../utils/weapp.socket.io/weapp.socket.io.js')
 // socket 连接地址
 const socketUrl = 'ws://localhost:5289'
 // socket 状态更新

@@ -16,16 +16,8 @@ App({
             this.globalData._isLogin = true;
             this.globalData.userInfo = msg.userInfo;
             this.globalData.friendsId = msg.friendsId;
-            if (this._msgQueue.length) {
-                let temp;
-                while (this._isLogin && !!(temp = this._msgQueue.shift())) {
-                    this._sendMsgImp({
-                        content: {...temp.content, userId: msg.userInfo.userId},
-                        success: temp.resolve,
-                        fail: temp.reject
-                    });
-                }
-            }
+
+            // todo 在登录前发的消息，这里可以写代码再次发送
         })
     },
     onHide() {

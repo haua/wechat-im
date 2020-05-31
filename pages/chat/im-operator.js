@@ -21,35 +21,30 @@ export default class IMOperator {
     }
 
     onSimulateReceiveMsg(cbOk) {
-        getApp().getIMHandler().sendMsg({
-            content: {
-                type: 'get-history',
-                userId: getApp().globalData.userInfo.userId,
-                friendId: this.getFriendId()
-            }
+        getApp().getIMHandler().emit('get-history', {
+            type: 'get-history',
+            userId: getApp().globalData.userInfo.userId,
+            friendId: this.getFriendId()
         });
-        getApp().getIMHandler().setOnReceiveMessageListener({
-            listener: (msg) => {
-                if (!msg) {
-                    return;
-                }
-                msg.isMy = msg.msgUserId === getApp().globalData.userInfo.userId;
-                const item = this.createNormalChatItem(msg);
-                // const item = this.createNormalChatItem({type: 'voice', content: '上传文件返回的语音文件路径', isMy: false});
-                // const item = this.createNormalChatItem({type: 'image', content: '上传文件返回的图片文件路径', isMy: false});
-                this._latestTImestamp = item.timestamp;
-                //这里是收到好友消息的回调函数，建议传入的item是 由 createNormalChatItem 方法生成的。
-                cbOk && cbOk(item);
+        getApp().getIMHandler().on('get-history', (msg) => {
+            if (!msg) {
+                return;
             }
+            msg.isMy = msg.msgUserId === getApp().globalData.userInfo.userId;
+            const item = this.createNormalChatItem(msg);
+            // const item = this.createNormalChatItem({type: 'voice', content: '上传文件返回的语音文件路径', isMy: false});
+            // const item = this.createNormalChatItem({type: 'image', content: '上传文件返回的图片文件路径', isMy: false});
+            this._latestTImestamp = item.timestamp;
+            //这里是收到好友消息的回调函数，建议传入的item是 由 createNormalChatItem 方法生成的。
+            cbOk && cbOk(item);
         });
-
     }
 
     async onSimulateSendMsg({content}) {
         //这里content即为要发送的数据
         //这里的content是一个对象了，不再是一个JSON格式的字符串。这样可以在发送消息的底层统一处理。
         try {
-            const {content: contentSendSuccess} = await getApp().getIMHandler().sendMsg({content});
+            const {content: contentSendSuccess} = await getApp().getIMHandler().emit(content.type, content);
             //这个contentSendSuccess格式一样,也是一个对象
             const msg = this.createNormalChatItem(contentSendSuccess);
             this._latestTImestamp = msg.timestamp;

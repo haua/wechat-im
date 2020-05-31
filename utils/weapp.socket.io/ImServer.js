@@ -1,5 +1,5 @@
 // 这个类包含调用socket.io的方法和缓存数据用
-const io = require('./weapp.socket.io.test.js')
+const io = require('./weapp.socket.io.js')
 
 export default class ImServer {
   socketUrl = 'wss://api-test.xiaojia7879.com'
@@ -45,7 +45,7 @@ export default class ImServer {
 
     // 断开后自动重连时
     socket.on('reconnect', attemptNumber => {
-      console.warn('SOCKET正在重连')
+      console.warn('SOCKET正在重连:' + attemptNumber)
     })
 
     // 重连失败，好像不会触发这个，只会触发 connect_error
@@ -81,7 +81,7 @@ export default class ImServer {
       } catch (e) {
 
       }
-      fn(obj || msg)
+      fn(obj || msg || '')
     })
   }
 
