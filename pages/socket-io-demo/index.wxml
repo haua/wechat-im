@@ -1,0 +1,4 @@
+<view>
+请看控制台
+    <text>{{socketMessage}}</text>
+</view>

@@ -3,7 +3,8 @@
     "pages/chat-list/chat-list",
     "pages/chat/chat",
     "pages/chat-input/chat-input",
-    "pages/friends/friends"
+    "pages/friends/friends",
+    "pages/socket-io-demo/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

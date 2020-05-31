@@ -1,4 +1,4 @@
-let ws = require("nodejs-websocket");
+const ws = require("nodejs-websocket");
 
 /**
  * 这个类是模拟webSocket服务端
@@ -80,6 +80,7 @@ module.exports = class WebSocketServer {
                 }
                 msg.timestamp = Date.now();
                 let connTemp = this.connMap.get(msg.friendId);
+                console.log('有朋友吗？', connTemp)
                 !!connTemp && this.sendText(connTemp, msg, (msgSendFinally) => {
                     let friend = this._users.find(item => item.userId === msg.friendId);
                     let my = this._users.find(item => item.userId === msg.userId);
@@ -130,14 +131,7 @@ module.exports = class WebSocketServer {
                 cbOk && cbOk(msgSendFinally);
             });
         } else {
-            let {type, content, friendId, duration, timestamp} = msg;
-            this._unreadObj[friendId]++;
-            const msgSendFinally = JSON.stringify({type, content, duration, timestamp});
-            cbOk && cbOk(msgSendFinally);
-            conn.sendText(JSON.stringify({
-                type: 'get-conversations',
-                conversations: this.getConversation(friendId)
-            }))
+            console.log('出错了！')
         }
     }
 
