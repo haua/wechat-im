@@ -28,7 +28,8 @@ export default class WebSocketHandlerImp extends IIMHandler {
 
     _sendMsgImp({content, success, fail}) {
         wx.sendSocketMessage({
-            data: JSON.stringify(content), success: () => {
+            data: JSON.stringify(content),
+            success: () => {
                 success && success({content});
             },
             fail: (res) => {

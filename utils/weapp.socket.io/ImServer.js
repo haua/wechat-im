@@ -121,9 +121,11 @@ export default class ImServer {
   emit (event, data) {
     if (this.socket) {
       this.socket.emit(event, typeof data === 'string' ? data : JSON.stringify(data))
+      return Promise.resolve({content: data})
     } else {
       console.error('socket尚未连接！')
     }
+    return Promise.reject('emit失败')
   }
 
   emitToken () {

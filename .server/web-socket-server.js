@@ -74,8 +74,6 @@ module.exports = class WebSocketServer {
                         type: msg.type,
                         friends: this._users.filter(item => item.userId !== msg.userId)
                     }));
-
-
                     return;
                 }
                 msg.timestamp = Date.now();

@@ -35,18 +35,19 @@ Page({
      */
     async onShow() {
         getApp().getIMHandler().on('get-conversations', (msg) => {
-            console.log('会话列表', msg);
+            console.log('更新会话列表', msg);
             msg.type === 'get-conversations' && this.setData({conversations: msg.conversations.map(item => this.getConversationsItem(item))})
         });
-        try {
-            await getApp().getIMHandler().emit('get-conversations', {
-                type: 'get-conversations',
-                userId: getApp().globalData.userInfo.userId
-            });
-            console.log('获取会话列表消息发送成功');
-        } catch (e) {
-            console.log('获取会话列表失败', e);
-        }
+        // 前端可以不用主动获取，登录成功后，后端会通知前端
+        // try {
+        //     await getApp().getIMHandler().emit('get-conversations', {
+        //         type: 'get-conversations',
+        //         userId: getApp().globalData.userInfo.userId
+        //     });
+        //     console.log('获取会话列表消息发送成功');
+        // } catch (e) {
+        //     console.log('获取会话列表失败', e);
+        // }
     },
 
     getConversationsItem(item) {

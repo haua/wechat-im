@@ -26,7 +26,7 @@ export default class IMOperator {
             userId: getApp().globalData.userInfo.userId,
             friendId: this.getFriendId()
         });
-        getApp().getIMHandler().on('get-history', (msg) => {
+        getApp().getIMHandler().on('text', (msg) => {
             if (!msg) {
                 return;
             }
