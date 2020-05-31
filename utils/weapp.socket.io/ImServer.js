@@ -3,7 +3,6 @@ const io = require('./weapp.socket.io.js')
 
 export default class ImServer {
   socketUrl = 'wss://api-test.xiaojia7879.com'
-  socketMessage = ''
   socket = null
   token = ''
 
@@ -62,11 +61,6 @@ export default class ImServer {
       console.error('SOCKET连接错误', err)
     })
 
-    // 收到其他类型的消息，这个类型是服务端自行定义的，需要找后端开发了解
-    socket.on('chat message', (d) => {
-      this.socketReceiveMessage(d)
-    })
-
     // 服务端要求上传token
     socket.on('needToken', () => {
       this.emitToken()
@@ -100,21 +94,7 @@ export default class ImServer {
   }
 
   /**
-   * 发送消息
-   */
-  socketSendMessage (sendStr) {
-    this.emit('chat message', sendStr);
-  }
-
-  /**
-   * 接收消息
-   */
-  socketReceiveMessage (receivedStr) {
-    // 发送成功一次后断开，测试完成
-    this.socketStop();
-  }
-
-  /**
+   * 向后端发消息的底层函数
    * @param event {string}
    * @param data {any}
    * */
