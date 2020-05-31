@@ -67,6 +67,7 @@ export default class ImServer {
     })
   }
 
+  // 获取后端消息的底层函数
   on (event, fn) {
     this.socket.on(event, (msg) => {
       let obj = null
